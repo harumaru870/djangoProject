@@ -1,6 +1,7 @@
 from django.contrib.auth.views import LoginView
 from .forms import CustomAuthenticationForm
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 def user_login(request):
     if request.method == 'POST':
@@ -14,3 +15,7 @@ def user_login(request):
         # GET メソッドの場合、ログインフォームを表示
         form = CustomAuthenticationForm()
         return render(request, 'login.html', {'form': form})
+
+@login_required
+def dashboard(request):
+    return render(request, 'dashboard.html')

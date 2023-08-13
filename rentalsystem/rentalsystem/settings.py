@@ -122,3 +122,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = '/myapp/login/' # ログインしていない人がログインが必要なurlにアクセスしたときにリダイレクトされるリンク
+LOGIN_REDIRECT_URL = '/myapp/dashboard/'  # ログイン後にリダイレクトするURL。適宜変更してください。
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = '/'  # ログアウト後にリダイレクトするURL。適宜変更してください。
