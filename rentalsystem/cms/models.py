@@ -12,7 +12,7 @@ class Item(models.Model):
     item_name = models.CharField(max_length=255)
     status = models.CharField(max_length=255)  # 例: 'available', 'rented' など
     category = models.CharField(max_length=255)  # 例: 'camera', 'lens' など
-    mount = models.CharField(max_length=255)  # 例: 'EF', 'RF', 'E-mount' など
+    mount = models.CharField(max_length=255, blank=True, null=True)  # 例: 'EF', 'RF', 'E-mount' など
 
     def __str__(self):
         return self.item_name
