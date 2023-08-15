@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>備品管理ダッシュボード</h2>
+            <div class="mt-4">
+                <a href="{% url 'borrow_items' %}">借りる</a>
+                <a href="{% url 'return_items' %}">返す</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

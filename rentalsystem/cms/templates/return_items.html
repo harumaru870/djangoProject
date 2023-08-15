@@ -1,0 +1,6 @@
+{% for action in items %}
+    <div>
+        {{ action.item.item_name }} - {{ action.timestamp }}
+        <a href="{% url 'return_item' action.id %}">返す</a>
+    </div>
+{% endfor %}

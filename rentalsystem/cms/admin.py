@@ -20,10 +20,8 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(Item, ItemAdmin)
 
 class ActionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'item', 'action_type', 'timestamp')
-    list_display_links = ('id', 'user', 'item')
-    search_fields = ('user__username', 'item__item_name', 'action_type')
-    list_filter = ('action_type',)
-    date_hierarchy = 'timestamp'
+    list_display = ('user', 'item', 'borrow_timestamp', 'return_timestamp')  # 両方のタイムスタンプを含めて更新
+    # date_hierarchy に timestamp を使用していた場合、それも更新します
+    date_hierarchy = 'borrow_timestamp'  # 必要に応じて 'return_timestamp' に変更
 
 admin.site.register(Action, ActionAdmin)

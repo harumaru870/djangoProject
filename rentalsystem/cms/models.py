@@ -16,8 +16,9 @@ class Item(models.Model):
 class Action(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    action_type = models.CharField(max_length=255)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    action_type = models.CharField(max_length=255)  # このフィールドはもう不要かもしれません
+    borrow_timestamp = models.DateTimeField(null=True, blank=True)
+    return_timestamp = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user.username} {self.action_type} {self.item.item_name} at {self.timestamp}"
+        return f"{self.user.username} borrowed {self.item.item_name} at {self.borrow_timestamp} and returned at {self.return_timestamp}"

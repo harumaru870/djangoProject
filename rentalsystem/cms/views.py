@@ -36,35 +36,34 @@ def borrow_item(request, item_id):
     # 'available' なステータスを持つ指定されたIDのアイテムを取得
     item = get_object_or_404(Item, pk=item_id, status='available')
 
-    # アクションを作成する前に現在のタイムスタンプを取得
-    current_timestamp = timezone.now()
+    # 現在のタイムスタンプを取得
+    borrow_timestamp = timezone.now()
 
     # Actionオブジェクトを作成
-    Action.objects.create(user=request.user, item=item, action_type='borrowed',
-                          timestamp=current_timestamp)  # タイムスタンプを記録
+    Action.objects.create(user=request.user, item=item, borrow_timestamp=borrow_timestamp)
 
     # アイテムのステータスを 'rented' に変更
     item.status = 'rented'
     item.save()
 
-    return redirect('borrow_items')  # 修正: 正しいリダイレクト先へ
+    return redirect('borrow_items')
 
 @login_required
 def return_items(request):
     # 正しいUserモデルのインスタンスを取得
     target_user = User.objects.get(username=request.user.username)
 
-    # target_userを使って 'borrowed' としているアイテムをフィルタリング
-    borrowed_items = Action.objects.filter(user=target_user, action_type='borrowed')
+    # target_userを使って、まだ返却されていないアイテムをフィルタリング
+    borrowed_items = Action.objects.filter(user=target_user, return_timestamp__isnull=True)
     return render(request, 'return_items.html', {'items': borrowed_items})
+
 
 @login_required
 def return_item(request, action_id):
-    action = get_object_or_404(Action, pk=action_id, user=request.user, action_type='borrowed')
+    action = get_object_or_404(Action, pk=action_id, user=request.user)
 
-    # アクションのステータスを 'returned' に変更
-    action.action_type = 'returned'
-    action.timestamp = timezone.now()
+    # 返却のタイムスタンプを設定
+    action.return_timestamp = timezone.now()
     action.save()
 
     # アイテムのステータスを 'available' に変更
@@ -72,4 +71,4 @@ def return_item(request, action_id):
     item.status = 'available'
     item.save()
 
-    return redirect('return_items')  # 返却後、再度借りているアイテムのリストにリダイレクト
+    return redirect('return_items')
