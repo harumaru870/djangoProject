@@ -1,14 +1,16 @@
 from django.contrib import admin
-from .models import User, Item, Action
+from .models import  Item, Action
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'grade', 'status')
+class DefaultUserAdmin(UserAdmin):
+    list_display = ('id', 'username', 'email', 'is_staff')  # gradeとstatusを削除して、他のデフォルトフィールドを追加
     list_display_links = ('id', 'username')
-    search_fields = ('username', 'status')
-    list_filter = ('grade', 'status')
+    search_fields = ('username', 'email')  # statusを削除して、emailを追加
+    # gradeとstatusのlist_filterを削除します。
 
-admin.site.register(User, UserAdmin)
-
+admin.site.unregister(User)  # 既に登録されている場合のUserモデルをアンレジスタ
+admin.site.register(User, DefaultUserAdmin)  # デフォルトのUserモデルを新しいAdmin定義で再登録
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id', 'item_name', 'status', 'category', 'mount')
     list_display_links = ('id', 'item_name')

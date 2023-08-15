@@ -11,3 +11,8 @@ class CustomAuthenticationForm(AuthenticationForm):
         label="パスワード",
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
+
+    error_messages = {
+        'invalid_login': "パスワードまたはIdが違います",
+        'inactive': "このアカウントは非アクティブです",
+    }
