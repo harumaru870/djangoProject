@@ -3,21 +3,62 @@
 
 {% block content %}
     <h2 class="my-4">借りられる商品一覧</h2>
-    <ul class="list-group">
+    <div class="row">
     {% for item in items %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span>
-                {{ item.item_name }} -
-                <span class="badge badge-secondary">{{ item.category }}</span>
-                <span class="badge badge-primary">{{ item.mount }}</span>
-            </span>
-
-            <!-- 借りるボタンを追加 -->
-            <form action="{% url 'borrow_item' item.id %}" method="post" class="ml-2">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-sm btn-primary">借りる</button>
-            </form>
-        </li>
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.item_name }}</h5>
+                    <p class="card-text">
+                        <span class="badge badge-secondary">{{ item.category }}</span>
+                        <span class="badge badge-primary">{{ item.mount }}</span>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <form action="{% url 'borrow_item' item.id %}" method="post" class="borrow-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-block">借りる</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     {% endfor %}
-    </ul>
+    </div>
+    <!-- Borrow Confirmation Modal -->
+<div class="modal fade" id="borrowConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="borrowConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="borrowConfirmationModalLabel">確認</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        このアイテムを借りますか？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+        <button type="button" class="btn btn-primary" id="confirmBorrowBtn">確認</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    $(".borrow-form button").on("click", function(e) {
+        e.preventDefault();
+        const form = $(this).closest("form");
+        // モーダルの確認ボタンがクリックされたときのアクションをセットアップ
+        $("#confirmBorrowBtn").on("click", function() {
+            form.submit();
+        });
+        // モーダルを表示
+        $("#borrowConfirmationModal").modal("show");
+    });
+});
+</script>
 {% endblock %}

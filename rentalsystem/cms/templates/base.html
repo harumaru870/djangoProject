@@ -9,10 +9,52 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+    /* グラデーションのスタイルを指定 */
+    .navbar {
+        background-color: #D9AFD9;
+background-image: linear-gradient(90deg, #D9AFD9 0%, #97D9E1 100%);
+    }
 
-    <title>My App</title>
+    /* ナビゲーションメニューアイテムのホバーアニメーション */
+    .navbar-nav .nav-item .nav-link {
+        transition: color 0.3s; /* アニメーション時間とプロパティを指定 */
+    }
+
+    .navbar-nav .nav-item .nav-link:hover {
+        color: #ff9900; /* ホバー時のテキスト色を指定 */
+    }
+      .borrow-form {
+        width: 50%; /* 例えば、ボタンの横幅を半分に設定 */
+        margin: 0 auto; /* 中央に配置するためのマージン設定 */
+    }
+</style>
+
+    <title>ZK APP|created by haru</title>
 </head>
 <body>
+    <header>
+        <!-- Bootstrap Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="">My App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Admin(パスワードの変更はこちら)</a>
+                    </li>
+                    <!-- More navigation items -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+
     <div class="content">
         {% block content %}
         {% endblock %}

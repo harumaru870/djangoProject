@@ -1,6 +1,19 @@
-{% for action in items %}
-    <div>
-        {{ action.item.item_name }} - {{ action.timestamp }}
-        <a href="{% url 'return_item' action.id %}">返す</a>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for action in items %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ action.item.item_name }}</h5>
+                    <p class="card-text">{{ action.timestamp }}</p>
+                    <a href="{% url 'return_item' action.id %}" class="btn btn-primary">返す</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-{% endfor %}
+</div>
+{% endblock %}

@@ -8,6 +8,9 @@ from django.contrib.auth.models import User
 
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')  # ログイン済みの場合はホームページにリダイレクト
+
     if request.method == 'POST':
         # POST メソッドの場合、LoginView を呼び出してログイン処理を行う
         login_view = LoginView.as_view(
