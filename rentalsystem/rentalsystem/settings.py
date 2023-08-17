@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'rentalsystem.wsgi.application'
+WSGI_APPLICATION = 'rentalsystem.wsgi.app'
 
 
 # Database
