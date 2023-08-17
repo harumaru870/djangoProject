@@ -9,7 +9,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style>
     /* グラデーションのスタイルを指定 */
     .navbar {
@@ -29,6 +28,10 @@ background-image: linear-gradient(90deg, #D9AFD9 0%, #97D9E1 100%);
         width: 50%; /* 例えば、ボタンの横幅を半分に設定 */
         margin: 0 auto; /* 中央に配置するためのマージン設定 */
     }
+    .content {
+    padding: 20px;
+}
+
 </style>
 
     <title>ZK APP|created by haru</title>
@@ -37,22 +40,34 @@ background-image: linear-gradient(90deg, #D9AFD9 0%, #97D9E1 100%);
     <header>
         <!-- Bootstrap Navigation Bar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="">My App</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin">Admin(パスワードの変更はこちら)</a>
-                    </li>
-                    <!-- More navigation items -->
-                </ul>
-            </div>
-        </nav>
+    <a class="navbar-brand" href="">My App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <!-- More navigation items -->
+        </ul>
+        <ul class="navbar-nav ml-auto"> <!-- ml-auto を追加して右寄せに配置 -->
+            <!-- ログインしている場合にログアウトボタンとユーザー名を表示 -->
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="nav-link">ようこそ、{{ user.username }}さん</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/password_change">パスワードを変更</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
     </header>
 
     <div class="content">

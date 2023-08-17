@@ -5,6 +5,7 @@ from .models import Item, Action
 from django.shortcuts import get_object_or_404, redirect,render
 from django.utils import timezone  # 追加: タイムゾーンを利用するために必要
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 def user_login(request):
@@ -29,9 +30,9 @@ def dashboard(request):
 
 @login_required
 def borrow_items(request):
-    # 'avaliable'なアイテムのみをフィルタリング
-    available_items = Item.objects.filter(status='available')
-    return render(request, 'borrow_items.html', {'items': available_items})
+    all_items = Item.objects.all()
+    return render(request, 'borrow_items.html', {'items': all_items})
+
 
 
 @login_required
@@ -46,11 +47,13 @@ def borrow_item(request, item_id):
     Action.objects.create(user=request.user, item=item, borrow_timestamp=borrow_timestamp)
 
     # アイテムのステータスを 'rented' に変更
+    # アイテムのステータスを 'rented' に変更
     item.status = 'rented'
     item.save()
+    # メッセージを作成してセッションに保存
+    messages.success(request, f'{item.item_name}をレンタルしました。')
 
     return redirect('borrow_items')
-
 @login_required
 def return_items(request):
     # 正しいUserモデルのインスタンスを取得
